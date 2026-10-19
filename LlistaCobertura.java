@@ -84,7 +84,20 @@ public class LlistaCobertura {
         }
         return menysprecis;
     }
+/**
+     * Mètode que retorna quants elemetns de la llista tenen una velocitat major a 100
+     * @return
+     */
+    public int majorA100(){
+        int contador = 0;
+        for (int i=0; i<elements; i++){
+            if(llista[i].getVelocitat() > 100){
+                contador++;
+            }
+        }
+        return contador;
+    }
 
-    public void duplicat ()
+    public void duplicat (){}
 
-   }
+}
