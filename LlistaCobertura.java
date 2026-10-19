@@ -1,0 +1,90 @@
+public class LlistaCobertura {
+   private Cobertura[] llista; 
+   private int elements;
+
+   /**
+    * Constructor de la classe LlistaCobertura
+    * @param elements
+    */
+   public LlistaCobertura(int capacitat){
+        this.llista = new Cobertura[capacitat];
+        this.elements = 0;
+   }
+   /**
+    * Mètode que retorna el número d'elements de la llista
+    * @return
+    */
+   public int getElement(){
+        return elements;
+    }
+
+    /**
+     * Mètode que retorna les dades d'una certa posició de la llista
+     * @param pos
+     * @return
+     */
+    public Cobertura getDada (int pos){
+        return llista[pos];
+    }
+    
+    /**    (non-Javadoc)
+     * Mètode toString que retorna la informació de la llista de cobertura
+     * @see java.lang.Object#toString()
+     */
+    public String toString(){
+        String aux ="";
+        aux = llista[0].toString();
+        for (int i=0;i<elements;i++){
+
+            aux += llista[i].toString();
+        }
+        return "La llista de cobertura:" + aux;
+    }
+
+    /**
+     * Mètode que afegeix una cobertura a la llista
+     * @param c
+     */
+    public void afegirCobertura (Cobertura c){
+        if (this.elements < elements){
+            llista[this.elements] = c.copia();
+            this.elements++;
+        }
+       
+   }
+
+   /**
+    * Mètode que retorna el total de punts de la llista de cobertura
+    * @param c
+    * @return
+    */
+   public int Puntstotals(Cobertura c){
+        int totalpunts = 0;
+        for (int i = 0; i < elements;i++){
+          if (c.getVelocitat()>100){
+            totalpunts += 1;
+          }
+          } 
+          return totalpunts;
+    }
+
+    /**
+     * Mètode que retorna el valor de la cobertura amb menys precisió
+     * @return
+     */
+    public Cobertura menysPrecisio (){
+        Cobertura menysprecis = llista[0];
+        for (int i=1; i<elements; i++){
+            if (menysprecis.getPrecisio() < llista[i].getPrecisio()){
+                menysprecis = llista[i].copia();
+            }
+            if (elements == 0){
+                menysprecis = null;
+            }
+        }
+        return menysprecis;
+    }
+
+    public void duplicat ()
+
+   }
