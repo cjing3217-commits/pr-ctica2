@@ -115,6 +115,21 @@ public class LlistaCobertura {
         }
         return resultat;
     }
+    /**
+     * 
+     * @param nomOperador
+     * @return
+     */
+    public LlistaCobertura dadesCobertura(String nomOperador){
+        LlistaCobertura resultat = new LlistaCobertura(llista.length);
+        for(int i = 0; i < elements; i++){
+            if(llista[i].getOperador().equals(nomOperador)){
+                resultat.afegirCobertura(llista[i]);
+            }
+        }
+        return resultat;
+    }
+
    
         
 
