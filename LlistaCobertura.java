@@ -47,7 +47,7 @@ public class LlistaCobertura {
      */
     public void afegirCobertura (Cobertura c){
         if (this.elements < elements){
-            llista[this.elements] = c.copia();
+             llista[this.elements] = c.copia();
             this.elements++;
         }
        
@@ -95,8 +95,22 @@ public class LlistaCobertura {
                 contador++;
             }
         }
+        
         return contador;
+
     }
+    public LlistaCobertura dadesMunicipi(String municipi){
+        LlistaCobertura resultat = new LlistaCobertura(llista.length);
+        for(int i = 0; i < elements; i++){
+            if(llista[i].getNomMunicipi().equals(municipi)){
+                resultat.afegirCobertura(llista[i]);
+
+            }
+        }
+        return resultat;
+    }
+   
+        
 
     public void duplicat (){}
 
