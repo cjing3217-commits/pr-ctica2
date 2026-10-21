@@ -99,6 +99,12 @@ public class LlistaCobertura {
         return contador;
 
     }
+/**
+ * 
+ * @param municipi
+ * @return
+ */
+
     public LlistaCobertura dadesMunicipi(String municipi){
         LlistaCobertura resultat = new LlistaCobertura(llista.length);
         for(int i = 0; i < elements; i++){
