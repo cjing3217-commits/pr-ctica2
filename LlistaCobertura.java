@@ -100,7 +100,7 @@ public class LlistaCobertura {
 
     }
 /**
- * 
+ * Metode que retorna una llista amb les dades d'un municipi concret
  * @param municipi
  * @return
  */
@@ -116,7 +116,7 @@ public class LlistaCobertura {
         return resultat;
     }
     /**
-     * 
+     * Metode que retorna una llista amb les dades d'un operador concret
      * @param nomOperador
      * @return
      */
@@ -130,9 +130,34 @@ public class LlistaCobertura {
         return resultat;
     }
 
+    public void eliminarCobertura (int codiPostal){
+        int i = 0;
+        while (i < elements){
+            if (llista[i].getCodiPostal() == codiPostal){
+                for (int j = i; j < elements -1; j++){
+                    llista[j] = llista[j+1];
+                    llista[elements -1] = null;
+                    elements--;
+                }
+            }
+            else {
+                i++;
+            }
+            
+
+        }
+    }
+
    
         
 
-    public void duplicat (){}
+    public Cobertura duplicat(String tipus, int numSatelits) {
+        for (int i = 0; i < elements; i++) {
+            if(llista[i].getSatelits() > numSatelits && llista[i].getActivitat().equals(tipus) && llista[i].getTipusXarxa().equals("4G")){
+                return llista[i].copia();
+            }
+        }
+        return null;
+    }
 
 }
