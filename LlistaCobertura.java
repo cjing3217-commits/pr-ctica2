@@ -159,5 +159,19 @@ public class LlistaCobertura {
         }
         return null;
     }
+    /**
+ * Compta quants punts de cobertura tenen un factor d'eficiència superior a x.
+ * @param x valor de comparació
+ * @return nombre de punts amb factor superior a x
+ */
+public int contarFactorSuperior(int x) {
+    int contador = 0;
+    for (int i = 0; i < elements; i++) {
+        if (llista[i].factorEficiencia() > x) {
+            contador++;
+        }
+    }
+    return contador;
+}
 
 }

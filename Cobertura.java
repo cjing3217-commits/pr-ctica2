@@ -119,4 +119,16 @@ public class Cobertura {
 		return nomMunicipi;
 	}
 	
+	/**
+ * Calcula el factor d'eficiència del punt de cobertura:
+ * (velocitat * precisió) / satèl·lits, o 0 si no hi ha satèl·lits.
+ * @return el factor d'eficiència
+ */
+public int factorEficiencia() {
+    if (satelits == 0) {
+        return 0;
+    }
+    return velocitat * precisio / satelits;
+}
+	
 }
