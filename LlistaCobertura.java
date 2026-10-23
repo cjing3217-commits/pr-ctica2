@@ -12,7 +12,7 @@ public class LlistaCobertura {
    }
    /**
     * Mètode que retorna el número d'elements de la llista
-    * @return
+    * @return elements
     */
    public int getElement(){
         return elements;
@@ -20,8 +20,8 @@ public class LlistaCobertura {
 
     /**
      * Mètode que retorna les dades d'una certa posició de la llista
-     * @param pos
-     * @return
+     * @param pos posició de la cobertura a obtenir
+     * @return les dades d'una llista d'una certa posició
      */
     public Cobertura getDada (int pos){
         return llista[pos];
@@ -47,7 +47,7 @@ public class LlistaCobertura {
      */
     public void afegirCobertura (Cobertura c){
         if (this.elements < elements){
-             llista[this.elements] = c.copia();
+            llista[this.elements] = c.copia();
             this.elements++;
         }
        
@@ -55,22 +55,21 @@ public class LlistaCobertura {
 
    /**
     * Mètode que retorna el total de punts de la llista de cobertura
-    * @param c
-    * @return
+    * @return nombre de cobertures amb velocitat superior a 100
     */
-   public int Puntstotals(Cobertura c){
-        int totalpunts = 0;
+   public int velocitatSuperior100(){
+        int cont = 0;
         for (int i = 0; i < elements;i++){
-          if (c.getVelocitat()>100){
-            totalpunts += 1;
+          if (llista[i].getVelocitat()>100){
+            cont++;
           }
           } 
-          return totalpunts;
+          return cont;
     }
 
     /**
      * Mètode que retorna el valor de la cobertura amb menys precisió
-     * @return
+     * @return la instància de cobertura amb menys precisió
      */
     public Cobertura menysPrecisio (){
         Cobertura menysprecis = llista[0];
@@ -84,94 +83,91 @@ public class LlistaCobertura {
         }
         return menysprecis;
     }
-/**
-     * Mètode que retorna quants elemetns de la llista tenen una velocitat major a 100
-     * @return
-     */
-    public int majorA100(){
-        int contador = 0;
-        for (int i=0; i<elements; i++){
-            if(llista[i].getVelocitat() > 100){
-                contador++;
-            }
-        }
-        
-        return contador;
-
-    }
-/**
- * Metode que retorna una llista amb les dades d'un municipi concret
- * @param municipi
- * @return
- */
-
-    public LlistaCobertura dadesMunicipi(String municipi){
-        LlistaCobertura resultat = new LlistaCobertura(llista.length);
-        for(int i = 0; i < elements; i++){
-            if(llista[i].getNomMunicipi().equals(municipi)){
-                resultat.afegirCobertura(llista[i]);
-
-            }
-        }
-        return resultat;
-    }
     /**
-     * Metode que retorna una llista amb les dades d'un operador concret
-     * @param nomOperador
-     * @return
+     * Mètode que crea un duplicat de la cobertura amb menys precisió per un tipus de xarxa i un nombre de satèl·lits superior o igual a l'indicat
+     * @param activitat tipus de xarxa a buscar
+     * @param nsat nombre de satèl·lits a buscar
+     * @return instáncia de cobertura trobada
      */
-    public LlistaCobertura dadesCobertura(String nomOperador){
-        LlistaCobertura resultat = new LlistaCobertura(llista.length);
-        for(int i = 0; i < elements; i++){
-            if(llista[i].getOperador().equals(nomOperador)){
-                resultat.afegirCobertura(llista[i]);
-            }
-        }
-        return resultat;
-    }
-
-    public void eliminarCobertura (int codiPostal){
+    public Cobertura duplicatXarxa4G (String activitat,int nsat){
+        boolean trobat = false;
         int i = 0;
-        while (i < elements){
-            if (llista[i].getCodiPostal() == codiPostal){
-                for (int j = i; j < elements -1; j++){
-                    llista[j] = llista[j+1];
-                    llista[elements -1] = null;
-                    elements--;
-                }
+        while (i<elements && !trobat){
+            if(llista[i].getTipusXarxa().equalIgnoreCase("4G") && llista[i].getActivitat().equalsIgnoreCase(activitat) && llista[i].getSatelits() >= nsat){
+                trobat = true;
             }
-            else {
+            else{
                 i++;
             }
-            
-
+        }
+        if (trobat){
+            return llista[i].copia();
+        }
+        else{
+            return null;
         }
     }
 
-   
-        
-
-    public Cobertura duplicat(String tipus, int numSatelits) {
-        for (int i = 0; i < elements; i++) {
-            if(llista[i].getSatelits() > numSatelits && llista[i].getActivitat().equals(tipus) && llista[i].getTipusXarxa().equals("4G")){
-                return llista[i].copia();
+    /**
+     * Calcula el nombre de cobertures amb factor d'eficiència superior a un valor indicat
+     * @param x valor mínim del factor d'eficiència 
+     * @return nombre de cobertures que compleixen la condició donada
+     */
+    public int Eficiencia (int x){
+        int cont = 0;
+        for (int i=0;i<elements;i++){
+            if (llista[i].factorEficiencia() < x ){
+                cont++;
             }
         }
-        return null;
+        return cont;
     }
+
     /**
- * Compta quants punts de cobertura tenen un factor d'eficiència superior a x.
- * @param x valor de comparació
- * @return nombre de punts amb factor superior a x
- */
-public int contarFactorSuperior(int x) {
-    int contador = 0;
-    for (int i = 0; i < elements; i++) {
-        if (llista[i].factorEficiencia() > x) {
-            contador++;
+     * Mètode que consulta les dades d'un municipi indicat
+     * @param municipi nom del municipi a buscar
+     * @return Llista de Cobertura amb els punts de cobertura del municipi
+     */
+    public LlistaCobertura dadesMunicipi(String municipi){
+        LlistaCobertura resultat = new LlistaCobertura(elements);
+        for(int i = 0; i < elements; i++){
+            if(llista[i].getNomMunicipi().equalsIgnoreCase(municipi)){
+                resultat.afegirCobertura(llista[i]);
+            }
         }
+        return resultat;
     }
-    return contador;
-}
+
+       /**
+     * Mètode que consulta les dades d'un operador indicat
+     * @param nomOperador nom de l'operador indicat
+     * @return Llista de Cobertura amb els punts de cobertura de l'operador
+     */
+    public LlistaCobertura dadesCobertura(String nomOperador){
+        LlistaCobertura resultat = new LlistaCobertura(elements);
+        for(int i = 0; i < elements; i++){
+            if(llista[i].getOperador().equalsIgnoreCase(nomOperador)){
+                resultat.afegirCobertura(llista[i]);
+            }
+        }
+        return resultat;
+    }
+
+    /**
+     * Mètode per eliminar un conjunt de dades d'un cert codi postal indicat 
+     * @param codiPostal codi postal d'un cert municipi
+     */
+    public void eliminar(int codiPostal){
+        for(int i=0;i<elements;i++){
+            if(llista[i].getCodiPostal() == codiPostal){
+                llista[i] = 0;
+            }
+            for (int j=i; j<elements-1;j++){
+                llista[j]= llista[j+1];
+            }
+            elements--;
+        }
+
+    }
 
 }
