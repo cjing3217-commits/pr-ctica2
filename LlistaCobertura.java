@@ -33,7 +33,6 @@ public class LlistaCobertura {
      */
     public String toString(){
         String aux ="";
-        aux = llista[0].toString();
         for (int i=0;i<elements;i++){
 
             aux += llista[i].toString();
@@ -46,7 +45,7 @@ public class LlistaCobertura {
      * @param c
      */
     public void afegirCobertura (Cobertura c){
-        if (this.elements < elements){
+        if (this.elements < llista.length){
             llista[this.elements] = c.copia();
             this.elements++;
         }
@@ -72,13 +71,13 @@ public class LlistaCobertura {
      * @return la instància de cobertura amb menys precisió
      */
     public Cobertura menysPrecisio (){
+        if (elements == 0){
+                return null;
+        }
         Cobertura menysprecis = llista[0];
         for (int i=1; i<elements; i++){
             if (menysprecis.getPrecisio() < llista[i].getPrecisio()){
                 menysprecis = llista[i].copia();
-            }
-            if (elements == 0){
-                menysprecis = null;
             }
         }
         return menysprecis;
@@ -93,7 +92,7 @@ public class LlistaCobertura {
         boolean trobat = false;
         int i = 0;
         while (i<elements && !trobat){
-            if(llista[i].getTipusXarxa().equalIgnoreCase("4G") && llista[i].getActivitat().equalsIgnoreCase(activitat) && llista[i].getSatelits() >= nsat){
+            if(llista[i].getTipusXarxa().equalsIgnoreCase("4G") && llista[i].getActivitat().equalsIgnoreCase(activitat) && llista[i].getSatelits() > nsat){
                 trobat = true;
             }
             else{
@@ -116,7 +115,7 @@ public class LlistaCobertura {
     public int Eficiencia (int x){
         int cont = 0;
         for (int i=0;i<elements;i++){
-            if (llista[i].factorEficiencia() < x ){
+            if (llista[i].factorEficiencia() > x ){
                 cont++;
             }
         }
@@ -160,12 +159,11 @@ public class LlistaCobertura {
     public void eliminar(int codiPostal){
         for(int i=0;i<elements;i++){
             if(llista[i].getCodiPostal() == codiPostal){
-                llista[i] = 0;
+                for (int j=i; j<elements-1;j++){
+                    llista[j]= llista[j+1];
+                }
+                i--;
             }
-            for (int j=i; j<elements-1;j++){
-                llista[j]= llista[j+1];
-            }
-            elements--;
         }
 
     }
