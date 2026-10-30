@@ -156,17 +156,20 @@ public class LlistaCobertura {
      * Mètode per eliminar un conjunt de dades d'un cert codi postal indicat 
      * @param codiPostal codi postal d'un cert municipi
      */
-   public void eliminar(int codiPostal) {
-    for (int i = 0; i < elements; i++) {
-        if (llista[i].getCodiPostal() == codiPostal) {
-            for (int j = i; j < elements - 1; j++) {
-                llista[j] = llista[j + 1];
+       public void eliminar(int codiPostal) {
+        int i = 0;
+        while (i < elements) {
+            if (llista[i].getCodiPostal() == codiPostal) {
+                for (int j = i; j < elements - 1; j++) {
+                    llista[j] = llista[j + 1];
+                }
+                llista[elements - 1] = null;
+                elements--;
+               
+            } else {
+                i++;
             }
-            llista[elements - 1] = null;   // quita la copia repetida del final
-            elements--;                    // un elemento menos
-            i--;                           // vuelvo a mirar esta posición
         }
     }
-}
 
 }
