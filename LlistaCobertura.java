@@ -76,7 +76,7 @@ public class LlistaCobertura {
         }
         Cobertura menysprecis = llista[0];
         for (int i=1; i<elements; i++){
-            if (menysprecis.getPrecisio() < llista[i].getPrecisio()){
+            if (menysprecis.getPrecisio() > llista[i].getPrecisio()){
                 menysprecis = llista[i].copia();
             }
         }
@@ -156,16 +156,17 @@ public class LlistaCobertura {
      * Mètode per eliminar un conjunt de dades d'un cert codi postal indicat 
      * @param codiPostal codi postal d'un cert municipi
      */
-    public void eliminar(int codiPostal){
-        for(int i=0;i<elements;i++){
-            if(llista[i].getCodiPostal() == codiPostal){
-                for (int j=i; j<elements-1;j++){
-                    llista[j]= llista[j+1];
-                }
-                i--;
+   public void eliminar(int codiPostal) {
+    for (int i = 0; i < elements; i++) {
+        if (llista[i].getCodiPostal() == codiPostal) {
+            for (int j = i; j < elements - 1; j++) {
+                llista[j] = llista[j + 1];
             }
+            llista[elements - 1] = null;   // quita la copia repetida del final
+            elements--;                    // un elemento menos
+            i--;                           // vuelvo a mirar esta posición
         }
-
     }
+}
 
 }
